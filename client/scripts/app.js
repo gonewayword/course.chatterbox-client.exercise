@@ -1,6 +1,6 @@
 // YOUR CODE HERE:
 $(document).ready(function() {
-
+  app.friends = [];
   app.init();
 
 });
@@ -12,9 +12,10 @@ var helperObject = {
   roomname: 'main-chat',
 };
 
+
 app.init = function() {
 
-  $('#send').on('click', function(event) {
+  $('#send .submit').on('click', function(event) {
     event.preventDefault();
     var text = $('#message').val();
     $('#message').val();
@@ -54,10 +55,23 @@ app.init = function() {
     $('#chats').empty();
   };
 
+  app.handleUsernameClick = function(username) {
+    console.log('username handled!');
+    this.friends.push(username);
+    $('#friends').append('<div class="friend">' + username + '<div>');
+      // app.fetch();
+  };
+
   app.renderMessage = function (message) {
     $('#chats').append($('<div>')
-      .append($(`<span>${message.username}: </span>`).attr('id', `${message.username}`))
-        .append(`<span>${message.text}</span>`).attr('class', helperObject.roomname));
+      .append($(`<span>${message.username}: </span>`).attr('class', 'username')
+      .on('click', function(event) {
+        event.preventDefault();
+        console.log('user clicked!');
+        app.handleUsernameClick(message.username);
+        $(`.${message.username}`).css('font-weight', 'bold');
+      }))
+        .append(`<span>${message.text}</span>`).attr('class', helperObject.roomname).attr('class', message.username));
   };
 
   var Mel = {
@@ -105,13 +119,11 @@ app.init = function() {
 
   };
 
-  app.handleUsernameClick = function() {
 
-  };
 
-  $('.username').on('click', function() {
-    $('this').handleUsernameClick();
-  });
+  // $('.username').on('click', function() {
+  //   $('this').handleUsernameClick();
+  // });
 
   // app.renderRoom("Connor & Brendan's Room!");
 
