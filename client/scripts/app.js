@@ -9,12 +9,19 @@ $(document).ready(function() {
 var app = {};
 
 var helperObject = {
-  roomname: 'main chat',
+  roomname: 'main-chat',
 };
 
 app.init = function() {
 
+  $('#send').on('click', function(event) {
+    event.preventDefault();
+    var text = $('#message').val();
+    $('#message').val();
 
+    app.handleSubmit(text);
+
+  });
 
   app.rooms = [];
   app.send = function(message) {
@@ -48,8 +55,18 @@ app.init = function() {
   };
 
   app.renderMessage = function (message) {
-    $('#chats').append($('<div>').text(message.text).attr('class', helperObject.roomname));
+    $('#chats').append($('<div>')
+      .append($(`<span>${message.username}: </span>`).attr('id', `${message.username}`))
+        .append(`<span>${message.text}</span>`).attr('class', helperObject.roomname));
   };
+
+  var Mel = {
+    username: 'Mel Brooks',
+    text: 'FUCKAROO DOLPHIN',
+    roomname: 'lobby'
+  };
+
+  app.renderMessage(Mel);
 
   app.renderRoom = function(roomName) {
     $('#roomSelect')
@@ -74,6 +91,20 @@ app.init = function() {
     document.getElementById('roomSelect').classList.toggle('show');
   });
 
+  app.handleSubmit = function(text) {
+
+    var username = window.location.search.slice(10);
+
+    var message = {
+      username: username,
+      text: text,
+      roomname: helperObject.roomName
+    };
+
+    app.send(message);
+
+  };
+
   app.handleUsernameClick = function() {
 
   };
@@ -82,5 +113,5 @@ app.init = function() {
     $('this').handleUsernameClick();
   });
 
-  app.renderRoom("Connor & Brendan's Room!");
+  // app.renderRoom("Connor & Brendan's Room!");
 };

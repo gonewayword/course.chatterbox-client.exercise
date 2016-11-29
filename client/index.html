@@ -26,13 +26,16 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
-
+      <div class="dropdown">
+        <button class='dropbutton'>Talky Rooms:</button>
+          <div id="roomSelect" class="dropdown-content">
+          </div>
+      </div>
+      <form>
+        <input type='text' id="message">
+        <button id="send" class="submit" >submit</button>
+      </form>
       <!-- Your HTML goes here! -->
-    </div>
-    <div class="dropdown">
-      <button class='dropbutton'>Talky Rooms:</button>
-        <div id="roomSelect" class="dropdown-content">
-        </div>
     </div>
     <div id="chats"></div>
   </body>
